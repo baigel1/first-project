@@ -7,35 +7,39 @@ import {
   StandardFacets,
   NumericalFacets,
   FilterSearch,
+  ApplyFiltersButton,
+  HierarchicalFacets,
 } from "@yext/search-ui-react";
 
 import { useSearchActions, useSearchState } from "@yext/search-headless-react";
 
 import { useState, useEffect } from "react";
+import Facets from "./Facets";
 
 const Sidebar = () => {
   // const [searchCount, setSearchCount] = useState(0);
   const [recs, setRecs] = useState([]);
 
   const searchActions = useSearchActions();
-  const filters = useSearchState((state) => state.filters.static);
-  const selectedFilters = filters?.filter((filter) => filter.selected) ?? [];
-  const disabled = selectedFilters.length === 0;
 
-  // const runSearch = () => {
-  //   setSearchCount(searchCount + 1);
-  // };
+  // const selectedFilters = filters?.filter((filter) => filter.selected) ?? [];
+  // const disabled = selectedFilters.length === 0;
+
+  const runSearch = () => {
+    // console.log("ahah");
+    searchActions.executeUniversalQuery();
+  };
   useEffect(() => {
     //call recs api
-    fetch(
-      "https://recommendations.optimizelocation.com/models/yext-hh-most-popular/query"
-    )
-      .then((data) => data.json())
-      .then((results) => {
-        setRecs(results.recommendations);
-        console.log("results are: ");
-        console.log(results.recommendations);
-      });
+    // fetch(
+    //   "https://recommendations.optimizelocation.com/models/yext-hh-most-popular/query"
+    // )
+    //   .then((data) => data.json())
+    //   .then((results) => {
+    //     setRecs(results.recommendations);
+    //     console.log("recs are: ");
+    //     console.log(results.recommendations);
+    //   });
   }, []);
 
   return (
@@ -46,17 +50,20 @@ const Sidebar = () => {
       <SearchBar
         customCssClasses={{
           searchBarContainer: "p-8",
-          searchButton: "bg-orange-500",
           inputElement: "text-xl text-[#ab1111]",
         }}
         // onSearch={runSearch}
       />
+
+      {/*********  FACETS SECTION **********/}
       {/* <StandardFacets
         customCssClasses={{
           standardFacetsContainer: "p-8",
           optionLabel: "text-white",
           titleLabel: "text-white text-xl font-semibold",
         }}
+        searchOnChange={false}
+        excludedFieldIds={["c_productHierarchy"]}
       />
       <NumericalFacets
         customCssClasses={{
@@ -65,34 +72,45 @@ const Sidebar = () => {
           titleLabel: "text-white text-xl font-semibold",
         }}
       /> */}
+      {/* <HierarchicalFacets
+        includedFieldIds={["c_productHierarchy"]}
+        customCssClasses={{
+          hierarchicalFacetsContainer: "p-8",
+        }}
+      /> */}
+
+      {/* END OF FACETS */}
+
       {/* filter search section */}
       {/* <FilterSearch
         searchFields={[
-          { fieldApiName: "color", entityType: "product" },
-          { fieldApiName: "size", entityType: "product" },
+          { fieldApiName: "builtin.location", entityType: "location" },
+          // { fieldApiName: "size", entityType: "product" },
         ]}
-        label="Color Filter"
+        label="Supermarket Filter"
         customCssClasses={{
           label: "text-white text-xl",
           filterSearchContainer: "p-8",
         }}
         sectioned={true}
-        // searchOnSelect={true}
-        onSelect={() => searchActions.executeVerticalQuery()}
+        //searchOnSelect={true}
+        //onSelect={() => searchActions.executeVerticalQuery()}
       />
-      <button
+      <ApplyFiltersButton /> */}
+      {/* <button
         onClick={() => {
           searchActions.executeVerticalQuery();
         }}
       >
+        
         Search
       </button> */}
 
       {/*maybe throw in some recommendations here? like most popular items on HH rn*/}
       {
-        <h1 className="text-white text-4xl text-bold p-8">
-          Recommended HH Content
-        </h1>
+        // <h1 className="text-white text-4xl text-bold p-8">
+        //   Recommended HH Content
+        // </h1>
       }
       {recs.map((rec: any) => {
         return (
