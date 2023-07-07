@@ -13,7 +13,7 @@ const ProductCard = ({ result }: CardProps<Product>): JSX.Element => {
   const price = result.rawData.price?.value;
   const desc = result.rawData.c_testtest;
   const desc2 = result.rawData.c_markdowntest;
-  const mark = result.rawData.c_markdowntest["markdown"];
+  const mark = result.rawData.c_markdowntest.html;
   console.log(result.rawData);
   return (
     <div className="flex w-2/12 border border-red-800 flex-col my-4 justify-between bg-white mx-2 w-60">
