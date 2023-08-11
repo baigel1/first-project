@@ -11,9 +11,10 @@ const ProductCard = ({ result }: CardProps<Product>): JSX.Element => {
     : undefined;
 
   const price = result.rawData.price?.value;
-  const desc = result.rawData.c_testtest;
-  const desc2 = result.rawData.c_markdowntest;
-  const mark = result.rawData.c_markdowntest["markdown"];
+  const desc = result.rawData.c_testtest ? result.rawData.c_testtest : "";
+  // const mark = result.rawData.c_markdowntest
+  //   ? result.rawData.c_markdowntest["markdown"]
+  //   : "nothing";
   console.log(result.rawData);
   return (
     <div className="flex w-2/12 border border-red-800 flex-col my-4 justify-between bg-white mx-2 w-60">
@@ -29,11 +30,15 @@ const ProductCard = ({ result }: CardProps<Product>): JSX.Element => {
         <button className="bg-white text-red-800 rounded drop-shadow-sm p-2 border border-red-800 my-2">
           Visit Website
         </button>
-        {/* <div>{parse(desc2["html"])}</div> */}
-        {/* <div>{<LexicalRichText serializedAST={desc["json"]} />}</div> */}
+        {/* <div>{desc2 ? parse(desc2["html"]) : "nothing"}</div> */}
         <div>
-          <ReactMarkdown children={mark} />
+          {desc === "" ? null : (
+            <LexicalRichText serializedAST={JSON.stringify(desc["json"])} />
+          )}
         </div>
+        {/* <div className="some stylsheet">
+          <ReactMarkdown children={mark} />
+        </div> */}
       </div>
     </div>
   );

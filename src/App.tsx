@@ -15,7 +15,6 @@ const config: HeadlessConfig = {
   apiKey: "9641a03ad3de221fb9c566b0c9148351",
   experienceKey: "test-experience",
   locale: "en",
-  //endpoints: SandboxEndpoints,
   verticalKey: "products",
   environment: Environment.SANDBOX,
   //cloudRegion: CloudRegion.US,

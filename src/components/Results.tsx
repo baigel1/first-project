@@ -9,6 +9,8 @@ import {
 import "mapbox-gl/dist/mapbox-gl.css";
 
 import ProductCard from "./ProductCard";
+import { ExampleCard } from "./ExampleCard";
+import { MarkdownCard } from "./MarkdownCard";
 
 const Results = () => {
   return (
