@@ -2,7 +2,6 @@ import {
   provideHeadless,
   SearchHeadlessProvider,
   HeadlessConfig,
-  SandboxEndpoints,
   CloudRegion,
   Environment,
 } from "@yext/search-headless-react";
@@ -12,11 +11,11 @@ import Sidebar from "./components/Sidebar";
 import Results from "./components/Results";
 
 const config: HeadlessConfig = {
-  apiKey: "9641a03ad3de221fb9c566b0c9148351",
-  experienceKey: "test-experience",
+  apiKey: "c86d435433eaa875de63ea410bf8ccb6",
+  experienceKey: "test",
   locale: "en",
   verticalKey: "products",
-  environment: Environment.SANDBOX,
+  //environment: Environment.SANDBOX,
   //cloudRegion: CloudRegion.US,
 };
 

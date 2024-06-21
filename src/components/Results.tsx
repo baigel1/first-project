@@ -4,6 +4,7 @@ import {
   StandardCard,
   MapboxMap,
   StandardSection,
+  GenerativeDirectAnswer,
 } from "@yext/search-ui-react";
 
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -15,6 +16,7 @@ import { MarkdownCard } from "./MarkdownCard";
 const Results = () => {
   return (
     <div className="bg-orange-100">
+      <GenerativeDirectAnswer />
       <VerticalResults
         CardComponent={ProductCard}
         customCssClasses={{

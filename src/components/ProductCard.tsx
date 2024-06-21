@@ -5,6 +5,7 @@ import { LexicalRichText } from "@yext/react-components";
 import ReactMarkdown from "react-markdown";
 
 const ProductCard = ({ result }: CardProps<Product>): JSX.Element => {
+  console.log(result);
   const name = result.name;
   const fruitImage = result.rawData.photoGallery
     ? result.rawData.photoGallery[0].image?.url
@@ -12,10 +13,13 @@ const ProductCard = ({ result }: CardProps<Product>): JSX.Element => {
 
   const price = result.rawData.price?.value;
   const desc = result.rawData.c_testtest ? result.rawData.c_testtest : "";
+
+  const privatePic = result.rawData.c_privateInfo;
+  console.log(privatePic);
   // const mark = result.rawData.c_markdowntest
   //   ? result.rawData.c_markdowntest["markdown"]
   //   : "nothing";
-  console.log(result.rawData);
+  //console.log(result.rawData);
   return (
     <div className="flex w-2/12 border border-red-800 flex-col my-4 justify-between bg-white mx-2 w-60">
       <div>

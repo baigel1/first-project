@@ -4,17 +4,23 @@
  */
 import {
   SearchBar,
-  StandardFacets,
-  NumericalFacets,
+  Facets,
   FilterSearch,
   ApplyFiltersButton,
-  HierarchicalFacets,
+  StandardFacet,
+  OnSelectParams,
 } from "@yext/search-ui-react";
 
-import { useSearchActions, useSearchState } from "@yext/search-headless-react";
+import {
+  DisplayableFacet,
+  FieldValueFilter,
+  SelectableStaticFilter,
+  StaticFilter,
+  useSearchActions,
+  useSearchState,
+} from "@yext/search-headless-react";
 
 import { useState, useEffect } from "react";
-import Facets from "./Facets";
 
 const Sidebar = () => {
   // const [searchCount, setSearchCount] = useState(0);
@@ -24,10 +30,25 @@ const Sidebar = () => {
 
   // const selectedFilters = filters?.filter((filter) => filter.selected) ?? [];
   // const disabled = selectedFilters.length === 0;
+  const filtersState = useSearchState((state) => state.filters.static);
+
+  const resultsState = useSearchState((state) => state.vertical.resultsCount);
+  const inputState = useSearchState((state) => state.query.input);
+
+  console.log(inputState);
+  console.log(filtersState);
 
   const runSearch = () => {
-    // console.log("ahah");
-    searchActions.executeUniversalQuery();
+    console.log("running search");
+    if (!inputState) {
+      console.log(`input state is: ${inputState}`);
+      console.log("nope!");
+    } else {
+      console.log(`input state is: ${inputState}`);
+      searchActions.executeVerticalQuery();
+    }
+
+    //searchActions.executeUniversalQuery();
   };
   useEffect(() => {
     //call recs api
@@ -41,9 +62,37 @@ const Sidebar = () => {
     //     console.log(results.recommendations);
     //   });
   }, []);
+  const handleFilterSelect = ({
+    newFilter,
+    newDisplayName,
+    setCurrentFilter,
+  }: OnSelectParams) => {
+    console.log(newFilter);
+    console.log(newDisplayName);
+    setCurrentFilter(newFilter);
+    const locationFilter: SelectableStaticFilter = {
+      filter: newFilter,
+      selected: true,
+      displayName: newDisplayName,
+    };
+    searchActions.setStaticFilters([locationFilter]);
+    console.log(filtersState);
+  };
 
+  // const transformColorFacet = (
+  //   options: DisplayableFacet["options"]
+  // ): DisplayableFacet["options"] => {
+  //   return options.map((option) => {
+  //     let displayName = "Yes";
+
+  //     return {
+  //       ...option,
+  //       displayName,
+  //     };
+  //   });
+  // };
   return (
-    <div className="flex flex-col w-5/12 h-screen h-full bg-red-800">
+    <div className="flex flex-col w-5/12 h-screen h-full bg-red-400">
       <h1 className="p-8 text-white text-6xl font-semibold">
         Baigel's Supermarket!
       </h1>
@@ -56,6 +105,10 @@ const Sidebar = () => {
       />
 
       {/*********  FACETS SECTION **********/}
+      <Facets />
+      {/* <StandardFacet fieldId="color" />
+        <StandardFacet fieldId="name" />
+      </Facets> */}
       {/* <StandardFacets
         customCssClasses={{
           standardFacetsContainer: "p-8",
@@ -85,16 +138,24 @@ const Sidebar = () => {
       {/* <FilterSearch
         searchFields={[
           { fieldApiName: "builtin.location", entityType: "location" },
-          // { fieldApiName: "size", entityType: "product" },
         ]}
         label="Supermarket Filter"
         customCssClasses={{
           label: "text-white text-xl",
           filterSearchContainer: "p-8",
         }}
-        sectioned={true}
-        //searchOnSelect={true}
-        //onSelect={() => searchActions.executeVerticalQuery()}
+        onSelect={handleFilterSelect}
+      />
+
+      <FilterSearch
+        searchFields={[{ fieldApiName: "name", entityType: "location" }]}
+        label="Name Filter"
+        customCssClasses={{
+          label: "text-white text-xl",
+          filterSearchContainer: "p-8",
+          inputElement: "bg-slate-200",
+        }}
+        onSelect={handleFilterSelect}
       />
       <ApplyFiltersButton /> */}
       {/* <button
