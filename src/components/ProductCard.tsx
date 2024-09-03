@@ -3,9 +3,8 @@ import { Product } from "../types/products";
 import parse from "html-react-parser";
 import { LexicalRichText } from "@yext/react-components";
 import ReactMarkdown from "react-markdown";
-
+import { useYextAnalytics } from "../hooks/useYextAnalytics";
 const ProductCard = ({ result }: CardProps<Product>): JSX.Element => {
-  console.log(result);
   const name = result.name;
   const fruitImage = result.rawData.photoGallery
     ? result.rawData.photoGallery[0].image?.url
@@ -15,7 +14,16 @@ const ProductCard = ({ result }: CardProps<Product>): JSX.Element => {
   const desc = result.rawData.c_testtest ? result.rawData.c_testtest : "";
 
   const privatePic = result.rawData.c_privateInfo;
-  console.log(privatePic);
+
+  const { dispatchYextEvent } = useYextAnalytics();
+
+  const handleCtaClick = () => {
+    dispatchYextEvent("CTA_CLICK", {
+      entityId: result.id,
+      verticalKey: "products",
+    });
+  };
+
   // const mark = result.rawData.c_markdowntest
   //   ? result.rawData.c_markdowntest["markdown"]
   //   : "nothing";
@@ -31,7 +39,10 @@ const ProductCard = ({ result }: CardProps<Product>): JSX.Element => {
       </div>
       <div className="flex flex-col p-2 mr-2 justify-center">
         <button className="bg-red-800 text-white rounded p-2">Order</button>
-        <button className="bg-white text-red-800 rounded drop-shadow-sm p-2 border border-red-800 my-2">
+        <button
+          className="bg-white text-red-800 rounded drop-shadow-sm p-2 border border-red-800 my-2"
+          onClick={handleCtaClick}
+        >
           Visit Website
         </button>
         {/* <div>{desc2 ? parse(desc2["html"]) : "nothing"}</div> */}

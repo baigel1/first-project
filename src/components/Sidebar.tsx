@@ -35,9 +35,6 @@ const Sidebar = () => {
   const resultsState = useSearchState((state) => state.vertical.resultsCount);
   const inputState = useSearchState((state) => state.query.input);
 
-  console.log(inputState);
-  console.log(filtersState);
-
   const runSearch = () => {
     console.log("running search");
     if (!inputState) {

@@ -9,9 +9,10 @@
   },
   "dependencies": {
     "@uiw/react-md-editor": "^3.23.4",
+    "@yext/analytics": "^0.6.6",
     "@yext/react-components": "^0.0.5",
-    "@yext/search-headless-react": "^2.5.0-beta.2",
-    "@yext/search-ui-react": "^1.7.0-beta",
+    "@yext/search-headless-react": "^2.4.0",
+    "@yext/search-ui-react": "^1.6.2",
     "html-react-parser": "^4.0.0",
     "react-ast": "^0.3.1",
     "react-markdown": "^8.0.7",
