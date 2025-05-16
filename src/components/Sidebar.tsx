@@ -9,11 +9,14 @@ import {
   ApplyFiltersButton,
   StandardFacet,
   OnSelectParams,
+  StaticFilters,
+  AppliedFilters,
 } from "@yext/search-ui-react";
 
 import {
   DisplayableFacet,
   FieldValueFilter,
+  FieldValueStaticFilter,
   SelectableStaticFilter,
   StaticFilter,
   useSearchActions,
@@ -31,7 +34,6 @@ const Sidebar = () => {
   // const selectedFilters = filters?.filter((filter) => filter.selected) ?? [];
   // const disabled = selectedFilters.length === 0;
   const filtersState = useSearchState((state) => state.filters.static);
-
   const resultsState = useSearchState((state) => state.vertical.resultsCount);
   const inputState = useSearchState((state) => state.query.input);
 
@@ -47,6 +49,20 @@ const Sidebar = () => {
 
     //searchActions.executeUniversalQuery();
   };
+
+  //TESTING STATIC FILTERS
+  useEffect(() => {
+    console.log(filtersState);
+    filtersState?.map((filter) => {
+      if (isFieldValueStaticFilter(filter.filter)) {
+        // Now TypeScript knows `filter` is a `FieldValueStaticFilter`
+        console.log(filter.filter.fieldId);
+      } else {
+        console.warn("The filter is not of type FieldValueStaticFilter");
+      }
+    });
+  }, [filtersState]);
+
   useEffect(() => {
     //call recs api
     // fetch(
@@ -59,6 +75,14 @@ const Sidebar = () => {
     //     console.log(results.recommendations);
     //   });
   }, []);
+
+  // Type guard to check if the filter is a FieldValueStaticFilter
+  function isFieldValueStaticFilter(
+    filter: StaticFilter
+  ): filter is FieldValueStaticFilter {
+    return (filter as FieldValueStaticFilter).fieldId !== undefined;
+  }
+
   const handleFilterSelect = ({
     newFilter,
     newDisplayName,
@@ -100,9 +124,18 @@ const Sidebar = () => {
         }}
         // onSearch={runSearch}
       />
-
+      <AppliedFilters />
+      {/* <StaticFilters
+        title="Colors"
+        fieldId="color"
+        filterOptions={[
+          { value: "yellow" },
+          { value: "blue" },
+          { value: "purple" },
+        ]}
+      /> */}
       {/*********  FACETS SECTION **********/}
-      <Facets />
+      {/* <Facets /> */}
       {/* <StandardFacet fieldId="color" />
         <StandardFacet fieldId="name" />
       </Facets> */}
@@ -132,6 +165,17 @@ const Sidebar = () => {
       {/* END OF FACETS */}
 
       {/* filter search section */}
+      <FilterSearch
+        searchFields={[
+          { fieldApiName: "builtin.location", entityType: "location" },
+        ]}
+        label="Supermarket Filter"
+        customCssClasses={{
+          label: "text-white text-xl",
+          filterSearchContainer: "p-8",
+        }}
+        onSelect={handleFilterSelect}
+      />
       {/* <FilterSearch
         searchFields={[
           { fieldApiName: "builtin.location", entityType: "location" },

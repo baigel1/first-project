@@ -12,9 +12,10 @@
     "@yext/analytics": "^0.6.6",
     "@yext/react-components": "^0.0.5",
     "@yext/search-headless-react": "^2.4.0",
-    "@yext/search-ui-react": "^1.6.2",
+    "@yext/search-ui-react": "^1.8.4",
     "html-react-parser": "^4.0.0",
     "react-ast": "^0.3.1",
+    "react-loading-skeleton": "^3.5.0",
     "react-markdown": "^8.0.7",
     "tailwind-merge": "^1.9.1"
   },
